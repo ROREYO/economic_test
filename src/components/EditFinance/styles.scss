@@ -33,7 +33,11 @@
 
   input {
     padding: 3px;
-    border: 1px solid white;
+    border-radius: 3px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  input:focus {
+    border-color: white;
   }
 }
 
