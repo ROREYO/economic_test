@@ -4,14 +4,41 @@ import DoneSvg from '../img/done.svg';
 
 import './styles.scss';
 
-export const EditFinance = ({ financesName, categories }) => {
-  const [nameFinance, setNameFinance] = React.useState(financesName.finances);
-  const [categoryFinance, setCategoryFinance] = React.useState('');
-  const [dateFinance, setDateFinance] = React.useState('');
-  const [sumFinance, setSumFinance] = React.useState('');
-  const [noteFinance, setNoteFinance] = React.useState('');
+export const EditFinance = ({ financesName, categories, onClickConfirmFinance }) => {
+  const { finances, category, date, sum, note } = financesName;
 
+  const [nameFinance, setNameFinance] = React.useState(finances);
+  const [categoryFinance, setCategoryFinance] = React.useState(category || categories[0].category);
+  const [dateFinance, setDateFinance] = React.useState(date || '');
+  const [sumFinance, setSumFinance] = React.useState(sum || '');
+  const [noteFinance, setNoteFinance] = React.useState(note || '');
+
+  const [getCategory, setGetCategory] = React.useState(categories);
   const inputRef = React.useRef();
+
+  React.useEffect(() => {
+    setGetCategory(categories);
+  }, [categories]);
+
+  const onClickDoneEdit = () => {
+    if (!dateFinance) {
+      alert('Enter the date');
+      return;
+    }
+    if (!sumFinance) {
+      alert('Enter the amount');
+      return;
+    }
+
+    onClickConfirmFinance(
+      financesName.id,
+      nameFinance,
+      categoryFinance,
+      dateFinance,
+      sumFinance,
+      noteFinance,
+    );
+  };
 
   return (
     <div className="edit_finances">
@@ -22,9 +49,13 @@ export const EditFinance = ({ financesName, categories }) => {
           value={nameFinance}
           onChange={(event) => setNameFinance(event.target.value)}
         />
-        <select className="edit_finances__category">
-          {categories.map((allCategories, index) => (
-            <option key={index}>{allCategories.category}</option>
+        <select
+          className="edit_finances__category"
+          onChange={(event) => setCategoryFinance(getCategory[event.target.value].category)}>
+          {categories.map((allCategories, key) => (
+            <option key={key} value={key} selected={category === allCategories.category}>
+              {allCategories.category}
+            </option>
           ))}
         </select>
         <div className="edit_finances__value">
@@ -51,7 +82,7 @@ export const EditFinance = ({ financesName, categories }) => {
         />
       </div>
       <div className="edit_finances__buttons buttons">
-        <button className="button">
+        <button className="button" onClick={onClickDoneEdit}>
           <img src={DoneSvg} alt="Done" />
         </button>
       </div>

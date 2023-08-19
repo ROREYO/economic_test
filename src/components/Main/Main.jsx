@@ -28,8 +28,44 @@ export const Main = () => {
       alert('Add a category first!');
       return;
     }
-    setFinances([...finances, { id: uuidv4(), finances: financesValue }]);
+    setFinances([...finances, { id: uuidv4(), finances: financesValue, isEditing: false }]);
   };
+  const onClickEditFinance = (id) => {
+    setFinances(
+      finances.map((finance) =>
+        finance.id === id ? { ...finance, isEditing: !finance.isEditing } : finance,
+      ),
+    );
+  };
+  const onClickConfirmFinance = (
+    id,
+    nameFinance,
+    categoryFinance,
+    dateFinance,
+    sumFinance,
+    noteFinance,
+  ) => {
+    setFinances(
+      finances.map((finance) =>
+        finance.id === id
+          ? {
+              ...finance,
+              isEditing: !finance.isEditing,
+              finances: nameFinance,
+              category: categoryFinance,
+              date: dateFinance,
+              sum: sumFinance,
+              note: noteFinance,
+            }
+          : finance,
+      ),
+    );
+  };
+  const onClickDeleteFinance = (id) => {
+    setFinances(finances.filter((finance) => finance.id !== id));
+  };
+
+  console.log(finances);
 
   return (
     <div className="main">
@@ -47,11 +83,24 @@ export const Main = () => {
         </div>
         <div className="main__finance border">
           <AddFinance onClickAddFinance={onClickAddFinance} />
-          {finances.map((finances, id) => (
-            <EditFinance financesName={finances} key={id} categories={categories} />
-          ))}
+          {finances.map((finances, id) =>
+            finances.isEditing ? (
+              <Finances
+                key={id}
+                financesName={finances}
+                onClickEditFinance={onClickEditFinance}
+                onClickDeleteFinance={onClickDeleteFinance}
+              />
+            ) : (
+              <EditFinance
+                key={id}
+                financesName={finances}
+                categories={categories}
+                onClickConfirmFinance={onClickConfirmFinance}
+              />
+            ),
+          )}
           {finances.length === 0 ? <NoData text="finances" /> : <Total />}
-          {/* <Finances /> */}
         </div>
       </div>
     </div>

@@ -5,23 +5,26 @@ import DeleteSvg from '../img/delete.svg';
 
 import './styles.scss';
 
-export const Finances = () => {
+export const Finances = ({ financesName, onClickEditFinance, onClickDeleteFinance }) => {
+  const { finances, category, date, sum, note } = financesName;
+
+  console.log(financesName);
   return (
     <div className="finances">
       <div className="finances__wrapper">
-        <div className="finances__text">Buy vegetables</div>
-        <div className="finances__category">Category</div>
+        <div className="finances__text">{finances}</div>
+        <div className="finances__category">{category}</div>
         <div className="finances__value">
-          <div className="value__date">02.11.1998</div>
-          <div className="value__money">-100.50 $</div>
+          <input className="value__date" type="date" value={date} disabled />
+          <div className="value__money">{`${sum} $`}</div>
         </div>
-        <div className="finances__note">Cucumber, tomato, onion, garlic, buryak</div>
+        <div className="finances__note">{note}</div>
       </div>
       <div className="finances__buttons buttons">
-        <button className="button">
+        <button className="button" onClick={() => onClickEditFinance(financesName.id)}>
           <img src={EditSvg} alt="Edit" />
         </button>
-        <button className="button">
+        <button className="button" onClick={() => onClickDeleteFinance(financesName.id)}>
           <img src={DeleteSvg} alt="Delete" />
         </button>
       </div>
