@@ -9,7 +9,9 @@ export const Categories = ({ categoryName, onClickDeleteCategory }) => {
     <div className="categories">
       <div className="categories__text">{categoryName.category}</div>
       <div className="categories__buttons buttons">
-        <button className="button" onClick={() => onClickDeleteCategory(categoryName.id)}>
+        <button
+          className="button"
+          onClick={() => onClickDeleteCategory(categoryName.category, categoryName.id)}>
           <img src={DeleteSvg} alt="Delete" />
         </button>
       </div>

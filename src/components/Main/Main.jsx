@@ -16,10 +16,26 @@ export const Main = () => {
   const [categories, setCategories] = React.useState([]);
   const [finances, setFinances] = React.useState([]);
 
-  const onClickAddCaregory = (categoryValue) => {
-    setCategories([...categories, { id: uuidv4(), category: categoryValue }]);
+  const onClickAddCaregory = (category) => {
+    let getCategoryFromCategories = categories.map(
+      (categories) => categories.category === category,
+    );
+
+    if (Boolean(...getCategoryFromCategories)) {
+      alert('This category already exists');
+      return;
+    }
+
+    setCategories([...categories, { id: uuidv4(), category: category }]);
   };
-  const onClickDeleteCategory = (id) => {
+  const onClickDeleteCategory = (category, id) => {
+    let getCategoryFromFinanse = finances.map((finance) => finance.category === category);
+
+    if (Boolean(...getCategoryFromFinanse)) {
+      alert('This category is related to finance. First delete or edit the finance');
+      return;
+    }
+
     setCategories(categories.filter((caregory) => caregory.id !== id));
   };
 
@@ -42,6 +58,7 @@ export const Main = () => {
     nameFinance,
     categoryFinance,
     dateFinance,
+    actionFinance,
     sumFinance,
     noteFinance,
   ) => {
@@ -54,6 +71,7 @@ export const Main = () => {
               finances: nameFinance,
               category: categoryFinance,
               date: dateFinance,
+              action: actionFinance,
               sum: sumFinance,
               note: noteFinance,
             }
@@ -64,8 +82,6 @@ export const Main = () => {
   const onClickDeleteFinance = (id) => {
     setFinances(finances.filter((finance) => finance.id !== id));
   };
-
-  console.log(finances);
 
   return (
     <div className="main">
@@ -100,7 +116,7 @@ export const Main = () => {
               />
             ),
           )}
-          {finances.length === 0 ? <NoData text="finances" /> : <Total />}
+          {finances.length === 0 ? <NoData text="finances" /> : <Total finances={finances} />}
         </div>
       </div>
     </div>

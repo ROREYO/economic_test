@@ -5,13 +5,16 @@ import DoneSvg from '../img/done.svg';
 import './styles.scss';
 
 export const EditFinance = ({ financesName, categories, onClickConfirmFinance }) => {
-  const { finances, category, date, sum, note } = financesName;
+  const { finances, category, date, action, sum, note } = financesName;
 
   const [nameFinance, setNameFinance] = React.useState(finances);
   const [categoryFinance, setCategoryFinance] = React.useState(category || categories[0].category);
   const [dateFinance, setDateFinance] = React.useState(date || '');
+  const [actionFinance, setActionFinance] = React.useState(action || 'Income');
   const [sumFinance, setSumFinance] = React.useState(sum || '');
   const [noteFinance, setNoteFinance] = React.useState(note || '');
+
+  console.log(actionFinance);
 
   const [getCategory, setGetCategory] = React.useState(categories);
   const inputRef = React.useRef();
@@ -35,6 +38,7 @@ export const EditFinance = ({ financesName, categories, onClickConfirmFinance })
       nameFinance,
       categoryFinance,
       dateFinance,
+      actionFinance,
       sumFinance,
       noteFinance,
     );
@@ -66,12 +70,16 @@ export const EditFinance = ({ financesName, categories, onClickConfirmFinance })
             value={dateFinance}
             onChange={(event) => setDateFinance(event.target.value)}
           />
+          <select onChange={(event) => setActionFinance(event.target.value)}>
+            <option selected={action === 'Income'}>Income</option>
+            <option selected={action === 'Expenditure'}>Expenditure</option>
+          </select>
           <input
             className="value__money"
-            type="text"
-            placeholder="+ or - and sum"
+            type="number"
+            placeholder="Sum money"
             value={sumFinance}
-            onChange={(event) => setSumFinance(event.target.value)}
+            onChange={(event) => setSumFinance(+event.target.value)}
           />
         </div>
         <input
