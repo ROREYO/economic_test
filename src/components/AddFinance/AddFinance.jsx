@@ -1,7 +1,6 @@
 import React from 'react';
 
-import addButton from '../img/addButton.svg';
-import './styles.scss';
+import addButton from '../../img/button/add.svg';
 
 export const AddFinance = ({ onClickAddFinance }) => {
   const [finance, setFinance] = React.useState('');

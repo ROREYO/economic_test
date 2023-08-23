@@ -1,6 +1,6 @@
 import React from 'react';
 
-import noDataSvg from '../img/noData.svg';
+import noDataSvg from '../../img/noData.svg';
 
 import './styles.scss';
 

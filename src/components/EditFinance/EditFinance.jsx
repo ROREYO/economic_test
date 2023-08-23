@@ -1,6 +1,6 @@
 import React from 'react';
 
-import DoneSvg from '../img/done.svg';
+import DoneSvg from '../../img/button/done.svg';
 
 import './styles.scss';
 

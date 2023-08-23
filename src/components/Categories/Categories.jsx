@@ -1,6 +1,6 @@
 import React from 'react';
 
-import DeleteSvg from '../img/delete.svg';
+import DeleteSvg from '../../img/button/delete.svg';
 
 import './styles.scss';
 

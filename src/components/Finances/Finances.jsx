@@ -1,7 +1,7 @@
 import React from 'react';
 
-import EditSvg from '../img/edit.svg';
-import DeleteSvg from '../img/delete.svg';
+import EditSvg from '../../img/button/edit.svg';
+import DeleteSvg from '../../img/button/delete.svg';
 
 import './styles.scss';
 
