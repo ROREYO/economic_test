@@ -24,7 +24,13 @@
   &__note {
     font-size: 13px;
   }
+  &__select {
+    padding-right: 20px;
+  }
 
+  option {
+    background-color: $violet-dark;
+  }
   input {
     padding: 3px;
     border-radius: 3px;

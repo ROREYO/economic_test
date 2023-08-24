@@ -14,8 +14,6 @@ export const EditFinance = ({ financesName, categories, onClickConfirmFinance })
   const [sumFinance, setSumFinance] = React.useState(sum || '');
   const [noteFinance, setNoteFinance] = React.useState(note || '');
 
-  console.log(actionFinance);
-
   const [getCategory, setGetCategory] = React.useState(categories);
   const inputRef = React.useRef();
 
@@ -24,6 +22,10 @@ export const EditFinance = ({ financesName, categories, onClickConfirmFinance })
   }, [categories]);
 
   const onClickDoneEdit = () => {
+    if (!nameFinance) {
+      alert('Enter the name');
+      return;
+    }
     if (!dateFinance) {
       alert('Enter the date');
       return;
@@ -54,7 +56,7 @@ export const EditFinance = ({ financesName, categories, onClickConfirmFinance })
           onChange={(event) => setNameFinance(event.target.value)}
         />
         <select
-          className="edit_finances__category"
+          className="edit_finances__select"
           onChange={(event) => setCategoryFinance(getCategory[event.target.value].category)}>
           {categories.map((allCategories, key) => (
             <option key={key} value={key} selected={category === allCategories.category}>
@@ -70,12 +72,13 @@ export const EditFinance = ({ financesName, categories, onClickConfirmFinance })
             value={dateFinance}
             onChange={(event) => setDateFinance(event.target.value)}
           />
-          <select onChange={(event) => setActionFinance(event.target.value)}>
+          <select
+            className="edit_finances__select"
+            onChange={(event) => setActionFinance(event.target.value)}>
             <option selected={action === 'Income'}>Income</option>
             <option selected={action === 'Expenditure'}>Expenditure</option>
           </select>
           <input
-            className="value__money"
             type="number"
             placeholder="Sum money"
             value={sumFinance}

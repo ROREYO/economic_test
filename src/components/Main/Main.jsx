@@ -13,8 +13,30 @@ import './styles.scss';
 uuidv4();
 
 export const Main = () => {
-  const [categories, setCategories] = React.useState([]);
-  const [finances, setFinances] = React.useState([]);
+  const getJsonCategories = JSON.parse(localStorage.getItem('categories'));
+  const getJsonFinances = JSON.parse(localStorage.getItem('finances'));
+  const isMountedCategories = React.useRef(false);
+  const isMountedFinances = React.useRef(false);
+
+  const [categories, setCategories] = React.useState(getJsonCategories || []);
+  const [finances, setFinances] = React.useState(getJsonFinances || []);
+
+  React.useEffect(() => {
+    if (isMountedCategories.current) {
+      const json = JSON.stringify(categories);
+      localStorage.setItem('categories', json);
+    }
+
+    isMountedCategories.current = true;
+  }, [categories]);
+  React.useEffect(() => {
+    if (isMountedFinances.current) {
+      const json = JSON.stringify(finances);
+      localStorage.setItem('finances', json);
+    }
+
+    isMountedFinances.current = true;
+  }, [finances]);
 
   const onClickAddCaregory = (category) => {
     let getCategoryFromCategories = categories.map(
